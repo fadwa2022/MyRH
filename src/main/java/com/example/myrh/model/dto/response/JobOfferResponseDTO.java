@@ -16,4 +16,6 @@ public class JobOfferResponseDTO {
     private String educationLevel;
     private String salary;
     private boolean approved;
+    private CompanyResponseDTO company;
+
 }

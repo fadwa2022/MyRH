@@ -1,10 +1,11 @@
 package com.example.myrh.model.dto.request;
 
+import com.example.myrh.model.entity.Company;
+import com.example.myrh.model.entity.JobOffer;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,5 +22,27 @@ public class JobOfferRequestDTO {
         private String educationLevel;
         @NotBlank(message = "salary is required")
         private String salary;
-    }
+        private boolean approved;
+        private Long companyId;
+        public JobOffer toModel(){
+
+                Company company = Company
+                        .builder()
+                        .companyId(companyId)
+                        .build();
+
+                return JobOffer
+                        .builder()
+                        .title(title)
+                        .description(description)
+                        .jobProfile(jobProfile)
+                        .city(city)
+                        .educationLevel(educationLevel)
+                        .salary(salary)
+                        .approved(approved)
+                        .companyOffred(company)
+                        .build();
+
+        }
+}
 

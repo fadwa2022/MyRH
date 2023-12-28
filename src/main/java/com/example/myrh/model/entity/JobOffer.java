@@ -4,8 +4,7 @@ package com.example.myrh.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Builder
 @AllArgsConstructor
@@ -22,6 +21,10 @@ public class JobOffer {
     private String educationLevel;
     private String salary;
     private boolean approved;
+
+    @ManyToOne
+    @JoinColumn(name = "companyoffred_id")
+    private Company companyOffred;
 
 
 }

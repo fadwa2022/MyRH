@@ -18,4 +18,6 @@ public class CompanyRequestDTO {
     private String phone;
     @NotBlank(message = "image is required")
     private String image;
+
+
 }
