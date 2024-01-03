@@ -19,7 +19,5 @@ public class JobSubmission {
     private Long id;
     @ManyToOne
     private JobOffer jobOffer;
-    @Lob
-    @Column(name = "pdf_document", columnDefinition = "bytea")
-    private byte[] pdfDocumentcv;
+    private String pdfDocumentcv;
 }

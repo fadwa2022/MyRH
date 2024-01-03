@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/job-offers")
 public class JobOfferController {
     private final JobOffreService jobOffreService;
@@ -24,4 +27,9 @@ public class JobOfferController {
         jobOffreService.updateApprovalStatus(offerId, approved);
         return ResponseEntity.ok("Statut d'approbation mis à jour avec succès");
     }
+    @GetMapping("/all")
+    public List<JobOfferResponseDTO> getAllJobOffers() {
+        return jobOffreService.getAllOffers();
+    }
+
 }

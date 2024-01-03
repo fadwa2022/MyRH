@@ -9,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/job-submissions")
 public class JobSubmissionController {
 
@@ -22,16 +25,18 @@ public class JobSubmissionController {
 
     @PostMapping
     public ResponseEntity<JobSubmission> addJobSubmission(
-            @RequestParam("pdfFile") MultipartFile pdfFile,
+            @RequestParam("pdfFile") String pdfFilelien,
             @RequestParam("jobSubmission") Long jobSubmission
       ) {
-       try {
-            JobSubmission savedJobSubmission = jobSubmissionService.addJobSubmission(jobSubmission, pdfFile);
+
+            JobSubmission savedJobSubmission = jobSubmissionService.addJobSubmission(jobSubmission, pdfFilelien);
 
             return new ResponseEntity<>(savedJobSubmission, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+    }
+    @GetMapping("/{jobOffreid}/submissions")
+    public ResponseEntity<List<JobSubmission>> getSubmissionsForJobOffer(@PathVariable Long jobOffreid) {
+        List<JobSubmission> submissions = jobSubmissionService.getSubmissionsForJobOffer(jobOffreid);
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
 }

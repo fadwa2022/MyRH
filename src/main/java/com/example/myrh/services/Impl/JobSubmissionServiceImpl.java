@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -28,10 +29,22 @@ public class JobSubmissionServiceImpl implements JobSubmissionService {
         this.jobOfferRepository= jobOfferRepository;
     }
 
-@Override
-    public JobSubmission addJobSubmission(Long jobOffreid, String pdfFile) throws IOException {
-         JobOffer jobOffer = jobOfferRepository.getReferenceById(jobOffreid);
-//todo:complet this methode je veut ajouter unesubmition et plus aficher lasubmission et apres passer au frontend 
+    @Override
+    public JobSubmission addJobSubmission(Long jobOffreid, String pdfFilelien) {
+
+    JobOffer jobOffer = jobOfferRepository.findJobOfferByOfferId(jobOffreid);
+    JobSubmission jobSubmission = new JobSubmission();
+    jobSubmission.setJobOffer(jobOffer);
+    jobSubmission.setPdfDocumentcv(pdfFilelien);
+
+    jobSubmissionRepository.save(jobSubmission);
+
+    return  jobSubmissionRepository.save(jobSubmission);
 }
+    @Override
+    public List<JobSubmission> getSubmissionsForJobOffer(Long jobOffreid) {
+        JobOffer jobOffer = jobOfferRepository.getReferenceById(jobOffreid);
+        return jobSubmissionRepository.findByJobOffer(jobOffer);
+    }
 
 }

@@ -4,4 +4,5 @@ import com.example.myrh.model.entity.JobOffer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JobOfferRepository  extends JpaRepository<JobOffer, Long> {
+    public JobOffer findJobOfferByOfferId(Long offreId);
 }

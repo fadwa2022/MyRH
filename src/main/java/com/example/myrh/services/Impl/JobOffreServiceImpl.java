@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class JobOffreServiceImpl implements JobOffreService {
@@ -37,5 +40,16 @@ public class JobOffreServiceImpl implements JobOffreService {
         jobOffer.setApproved(approved);
 
         jobOfferRepository.save(jobOffer);
+    }
+    @Override
+    public List<JobOfferResponseDTO> getAllOffers() {
+        List<JobOfferResponseDTO> responseDTOs = new ArrayList<>();
+         List<JobOffer> jobOffers = jobOfferRepository.findAll();
+
+        for (JobOffer jobOffer : jobOffers) {
+            JobOfferResponseDTO responseDTO = modelMapper.map(jobOffer,JobOfferResponseDTO.class);
+            responseDTOs.add(responseDTO);
+        }
+        return responseDTOs;
     }
 }
